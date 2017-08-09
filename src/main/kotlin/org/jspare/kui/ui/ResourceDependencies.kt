@@ -1,4 +1,4 @@
-package org.jspare.kui
+package org.jspare.kui.ui
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy

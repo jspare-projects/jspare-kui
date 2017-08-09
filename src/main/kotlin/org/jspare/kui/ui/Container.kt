@@ -1,6 +1,4 @@
-package org.jspare.kui.widgets
-
-import org.jspare.kui.Renderable
+package org.jspare.kui.ui
 
 import java.util.ArrayList
 

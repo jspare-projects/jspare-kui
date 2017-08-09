@@ -1,4 +1,4 @@
-package org.jspare.kui
+package org.jspare.kui.ui
 
 enum class ResourceType {
     STYLE,

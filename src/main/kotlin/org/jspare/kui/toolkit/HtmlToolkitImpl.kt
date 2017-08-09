@@ -1,10 +1,9 @@
-package org.jspare.kui.toolkit.html
+package org.jspare.kui.toolkit
 
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.templ.TemplateEngine
-import org.jspare.kui.Renderable
-import org.jspare.kui.Toolkit
+import org.jspare.kui.ui.Renderable
 
 import java.util.HashMap
 import javax.inject.Inject

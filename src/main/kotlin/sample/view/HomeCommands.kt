@@ -1,11 +1,10 @@
 package sample.view
 
-import org.jspare.kui.View
-import org.jspare.kui.handler.ViewHandler
-import org.jspare.kui.widgets.Container
-import org.jspare.kui.widgets.DataGrid
-import org.jspare.kui.widgets.Form
-import org.jspare.kui.widgets.Input
+import org.jspare.kui.router.handler.ViewHandler
+import org.jspare.kui.ui.Container
+import org.jspare.kui.ui.DataGrid
+import org.jspare.kui.ui.Form
+import org.jspare.kui.ui.Input
 import org.jspare.vertx.web.annotation.handling.Parameter
 
 class HomeCommands : ViewHandler() {

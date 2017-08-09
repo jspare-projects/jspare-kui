@@ -1,4 +1,4 @@
-package org.jspare.kui.widgets
+package org.jspare.kui.ui
 
 abstract class Field : AbstractWidget() {
 

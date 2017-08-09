@@ -1,9 +1,8 @@
-package org.jspare.kui.widgets;
+package org.jspare.kui.ui;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import org.jetbrains.annotations.NotNull;
-import org.jspare.kui.Renderable;
 
 import java.util.UUID;
 
