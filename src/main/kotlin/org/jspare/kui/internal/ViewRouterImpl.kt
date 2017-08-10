@@ -1,6 +1,6 @@
-package org.jspare.kui.router.impl
+package org.jspare.kui.internal
 
-import org.jspare.kui.router.ViewRouter
+import org.jspare.kui.ViewRouter
 
 class ViewRouterImpl : ViewRouter {
 

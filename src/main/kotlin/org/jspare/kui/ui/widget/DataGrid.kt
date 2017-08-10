@@ -1,5 +1,7 @@
-package org.jspare.kui.ui
+package org.jspare.kui.ui.widget
 
+import org.jspare.kui.Renderable
+import org.jspare.kui.ui.AbstractWidget
 import java.util.ArrayList
 
 class DataGrid : AbstractWidget() {

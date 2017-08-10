@@ -1,6 +1,4 @@
-package org.jspare.kui.toolkit
-
-import org.jspare.kui.ui.Renderable
+package org.jspare.kui
 
 interface Toolkit {
 

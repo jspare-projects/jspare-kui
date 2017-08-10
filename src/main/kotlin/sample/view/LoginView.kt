@@ -1,7 +1,7 @@
 package sample.view
 
-import org.jspare.kui.ui.Form
-import org.jspare.kui.ui.Input
+import org.jspare.kui.ui.widget.Form
+import org.jspare.kui.ui.widget.Input
 import org.jspare.kui.ui.View
 
 class LoginView : View() {

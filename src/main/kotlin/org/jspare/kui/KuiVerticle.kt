@@ -1,7 +1,6 @@
 package org.jspare.kui
 
-import org.jspare.kui.router.ViewRouter
-import org.jspare.kui.router.impl.ViewRouterImpl
+import org.jspare.kui.internal.ViewRouterImpl
 import org.jspare.vertx.JspareVerticle
 
 abstract class KuiVerticle : JspareVerticle() {

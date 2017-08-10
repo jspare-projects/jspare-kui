@@ -1,4 +1,4 @@
-package org.jspare.kui.i18n
+package org.jspare.kui
 
 import javax.annotation.Resource
 import java.io.File

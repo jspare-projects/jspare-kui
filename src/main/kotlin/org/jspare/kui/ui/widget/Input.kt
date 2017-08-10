@@ -1,4 +1,6 @@
-package org.jspare.kui.ui
+package org.jspare.kui.ui.widget
+
+import org.jspare.kui.ui.Field
 
 class Input : Field() {
 

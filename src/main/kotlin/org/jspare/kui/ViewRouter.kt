@@ -1,4 +1,4 @@
-package org.jspare.kui.router
+package org.jspare.kui
 
 import kotlin.reflect.KClass
 
