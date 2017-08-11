@@ -6,13 +6,5 @@ class Input : Field() {
 
     var type: InputType? = InputType.TEXT
 
-    fun withType(type: InputType): Field {
-        this.type = type
-        return this
-    }
-
-    enum class InputType {
-        TEXT,
-        PASSWORD
-    }
+    fun withType(type: InputType): Field = fluently { this.type = type }
 }

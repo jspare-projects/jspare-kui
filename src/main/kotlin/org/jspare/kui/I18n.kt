@@ -10,9 +10,7 @@ class I18n {
 
     var locale: Locale? = null
 
-    operator fun get(key: String): String {
-        return get(DEFAULT_BUNDLE, key)
-    }
+    operator fun get(key: String): String =get(DEFAULT_BUNDLE, key)
 
     operator fun get(bundle: String, key: String): String {
         val labels = ResourceBundle.getBundle(DEFAULT_PATH + bundle, locale!!)
@@ -20,10 +18,7 @@ class I18n {
     }
 
     companion object {
-
         private val DEFAULT_PATH = File.separator + "i18n" + File.separator
         private val DEFAULT_BUNDLE = "labels"
     }
-
-
 }

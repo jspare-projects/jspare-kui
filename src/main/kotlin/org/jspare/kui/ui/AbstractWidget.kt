@@ -3,36 +3,27 @@ package org.jspare.kui.ui
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
 import org.jspare.kui.ui.widget.Attribute
-import java.util.*
 
 abstract class AbstractWidget : Widget {
 
     override var attributes: Array<Attribute> = emptyArray()
     override var classes: Array<String> = emptyArray()
     override var style: String = ""
+    override var id: String = ""
 
-    init {
-        this.id = UUID.randomUUID().toString()
-    }
+    fun withId(id: String): Widget = fluently { this.id = id }
 
-    fun withId(id: String): Widget {
-        this.id = id
-        return this
-    }
+    override fun addAttribute(attr: Attribute): Widget = fluently { attributes.plus(attr) }
 
-    override fun addAttribute(attr: Attribute): Widget {
-        attributes.plus(attr)
-        return this
-    }
-
-    override fun addClass(oneClass: String): Widget {
-        classes.plus(oneClass)
-        return this
-    }
+    override fun addClass(oneClass: String): Widget = fluently { classes.plus(oneClass) }
 
     override fun render(): String {
         return ""
     }
 
     override fun render(ar: Handler<AsyncResult<String>>) {}
+
+    fun <T : Any> T.fluently(func: () -> Unit): T {
+        return this.apply { func() }
+    }
 }

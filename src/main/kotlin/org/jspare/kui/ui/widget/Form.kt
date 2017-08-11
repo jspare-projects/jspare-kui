@@ -5,6 +5,11 @@ import org.jspare.kui.ui.Field
 import java.util.*
 
 class Form : AbstractWidget() {
+    override var id: String
+        get() = this.id
+        set(value) {
+            this.id = value
+        }
 
     private val fields = ArrayList<Field>()
 

@@ -3,11 +3,10 @@ package org.jspare.kui.ui
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
 import io.vertx.core.http.HttpServerRequest
-import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
-import org.jspare.kui.Renderable
 import org.jspare.kui.I18n
+import org.jspare.kui.Renderable
 import java.util.*
 import javax.inject.Inject
 
@@ -15,33 +14,27 @@ abstract class View() {
 
     @Inject val i18n: I18n? = null
     val data = JsonObject()
-
     var routingContext: RoutingContext? = null
-    var request: HttpServerRequest? = null
-    var response: HttpServerResponse? = null
-
-    private val elements = ArrayList<Renderable>()
+    private var request: HttpServerRequest? = null
+    val elements = ArrayList<Renderable>()
 
     fun addElement(renderable: Renderable): View {
         this.elements.add(renderable)
         return this
     }
 
-    fun render(component: Renderable) {
-
-        component.render()
+    fun addElements(vararg renderables: Renderable): View {
+        this.elements.addAll(renderables)
+        return this
     }
 
-    fun render(component: Renderable, handler: Handler<AsyncResult<String>>) {
+    fun getParam(paramName: String) = request?.getParam(paramName)
 
-        component.render(handler)
-    }
+    fun render(component: Renderable) = component.render()
 
-    fun i18n(key: String): String {
-        return i18n(key, key)
-    }
+    fun render(component: Renderable, handler: Handler<AsyncResult<String>>) = component.render(handler)
 
-    fun i18n(key: String, defaultValue: String = ""): String {
-        return i18n?.get(key) ?: defaultValue
-    }
+    fun i18n(key: String): String = i18n(key, key)
+
+    fun i18n(key: String, defaultValue: String = ""): String = i18n?.get(key) ?: defaultValue
 }
