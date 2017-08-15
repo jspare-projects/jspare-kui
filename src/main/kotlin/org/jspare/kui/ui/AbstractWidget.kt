@@ -1,15 +1,22 @@
 package org.jspare.kui.ui
 
-import io.vertx.core.AsyncResult
-import io.vertx.core.Handler
+import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.RoutingContext
+import org.jspare.core.Environment
+import org.jspare.kui.Toolkit
+import org.jspare.kui.fluently
 import org.jspare.kui.ui.widget.Attribute
 
 abstract class AbstractWidget : Widget {
 
+    val data: JsonObject = JsonObject()
+
+    override var id: String = ""
     override var attributes: Array<Attribute> = emptyArray()
     override var classes: Array<String> = emptyArray()
     override var style: String = ""
-    override var id: String = ""
+
+    fun data(): JsonObject = this.data
 
     fun withId(id: String): Widget = fluently { this.id = id }
 
@@ -17,13 +24,6 @@ abstract class AbstractWidget : Widget {
 
     override fun addClass(oneClass: String): Widget = fluently { classes.plus(oneClass) }
 
-    override fun render(): String {
-        return ""
-    }
-
-    override fun render(ar: Handler<AsyncResult<String>>) {}
-
-    fun <T : Any> T.fluently(func: () -> Unit): T {
-        return this.apply { func() }
-    }
+    override fun render(context: RoutingContext): String =
+            Environment.my(Toolkit::class.java).render(context, this);
 }

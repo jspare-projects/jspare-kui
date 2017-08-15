@@ -1,6 +1,8 @@
 package org.jspare.kui
 
-interface Toolkit {
+import io.vertx.ext.web.RoutingContext
 
-    fun render(component: Renderable): String
+open interface Toolkit {
+
+    fun render(context: RoutingContext, component: Renderable): String
 }

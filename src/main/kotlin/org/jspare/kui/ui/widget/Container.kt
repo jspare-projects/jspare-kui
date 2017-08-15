@@ -1,15 +1,15 @@
 package org.jspare.kui.ui.widget
 
 import org.jspare.kui.Renderable
+import org.jspare.kui.fluently
 import org.jspare.kui.ui.AbstractWidget
-import java.util.ArrayList
+import java.util.*
 
-class Container : AbstractWidget()   {
+class Container : AbstractWidget() {
 
     private val elements = ArrayList<Renderable>()
 
-    fun addChild(renderable: Renderable): Container {
+    fun addChild(renderable: Renderable): Container = fluently {
         this.elements.add(renderable)
-        return this
     }
 }

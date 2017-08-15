@@ -1,10 +1,8 @@
 package org.jspare.kui
 
-import io.vertx.core.AsyncResult
-import io.vertx.core.Handler
+import io.vertx.ext.web.RoutingContext
 
 interface Renderable {
 
-    fun render(): String
-    fun render(ar: Handler<AsyncResult<String>>)
+    fun render(context: RoutingContext): String
 }

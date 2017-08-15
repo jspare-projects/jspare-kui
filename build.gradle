@@ -22,9 +22,10 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "org.jspare.vertx:vertx-jspare-web:$vertxJspare_version"
     compile "org.jspare.vertx:vertx-jspare-unit:$vertxJspare_version"
-    compile "io.vertx:vertx-web-templ-handlebars:$vertx_version"
+    compile "com.github.jknack:handlebars:4.0.6"
     testCompile "junit:junit:4.11"
 }
 

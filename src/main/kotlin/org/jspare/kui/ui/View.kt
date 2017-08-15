@@ -1,7 +1,5 @@
 package org.jspare.kui.ui
 
-import io.vertx.core.AsyncResult
-import io.vertx.core.Handler
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
@@ -29,10 +27,6 @@ abstract class View() {
     }
 
     fun getParam(paramName: String) = request?.getParam(paramName)
-
-    fun render(component: Renderable) = component.render()
-
-    fun render(component: Renderable, handler: Handler<AsyncResult<String>>) = component.render(handler)
 
     fun i18n(key: String): String = i18n(key, key)
 
