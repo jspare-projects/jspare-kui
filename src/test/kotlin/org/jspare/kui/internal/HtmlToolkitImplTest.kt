@@ -23,10 +23,17 @@ class HtmlToolkitImplTest {
     }
 
     @Test
-    fun simple(ctx: TestContext) {
+    fun ct_01(ctx: TestContext) {
 
         val rCtx = Mocker.createProxy(RoutingContext::class.java)
         ctx.assertEquals(readCt("/ct_01.html"), Input().render(rCtx))
+    }
+
+    @Test
+    fun ct_02(ctx: TestContext) {
+
+        val rCtx = Mocker.createProxy(RoutingContext::class.java)
+        ctx.assertEquals(readCt("/ct_02.html"), Input().render(rCtx))
     }
 
     private fun readCt(name: String) = HtmlToolkitImplTest::class.java.getResource(name).readText()

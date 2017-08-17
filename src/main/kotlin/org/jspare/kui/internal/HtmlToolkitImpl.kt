@@ -41,8 +41,8 @@ class HtmlToolkitImpl : Toolkit {
 
     override fun render(routingContext: RoutingContext, component: Renderable): String {
 
-        //
-        val pScripts = RenderableReflector.scripts(component)
+        addScriptOnRoutingContext(routingContext, component)
+
         val pTemplate = RenderableReflector.template(component)
         val pData = RenderableReflector.data(component)
 
@@ -51,5 +51,15 @@ class HtmlToolkitImpl : Toolkit {
         val context = Context.newBuilder(pData).resolver(*resolvers).build()
 
         return template?.apply(context) ?: StringUtils.EMPTY
+    }
+
+    private fun addScriptOnRoutingContext (routingContext: RoutingContext, component: Renderable) {
+
+        val scripts = routingContext.get<Array<String>>("_scripts") ?: emptyArray()
+        val pScripts = RenderableReflector.scripts(component) ?: emptyArray()
+
+        scripts.plus(pScripts)
+
+        routingContext.put("_scripts", scripts)
     }
 }
