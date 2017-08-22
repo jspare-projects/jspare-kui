@@ -20,9 +20,9 @@ class HtmlToolkitImpl : Toolkit {
     private val loader: TemplateLoader = ClassPathTemplateLoader()
     private val handlebars: Handlebars = Handlebars(loader)
 
-    override fun render(routingContext: RoutingContext, component: Renderable): String {
+    override fun render(rCtx: RoutingContext, component: Renderable): String {
 
-        addScriptOnRoutingContext(routingContext, component)
+        addScriptOnRoutingContext(rCtx, component)
 
         val pTemplate = RenderableReflector.template(component)
         val pData = RenderableReflector.data(component, component.javaClass)
@@ -34,13 +34,13 @@ class HtmlToolkitImpl : Toolkit {
         return template?.apply(context) ?: StringUtils.EMPTY
     }
 
-    private fun addScriptOnRoutingContext (routingContext: RoutingContext, component: Renderable) {
+    private fun addScriptOnRoutingContext (rCtx: RoutingContext, component: Renderable) {
 
-        val scripts = routingContext.get<Array<String>>("_scripts") ?: emptyArray()
+        val scripts = rCtx.get<Array<String>>("_scripts") ?: emptyArray()
         val pScripts = RenderableReflector.scripts(component) ?: emptyArray()
 
         scripts.plus(pScripts)
 
-        routingContext.put("_scripts", scripts)
+        rCtx.put("_scripts", scripts)
     }
 }

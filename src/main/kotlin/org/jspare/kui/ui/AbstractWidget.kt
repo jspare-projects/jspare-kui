@@ -4,7 +4,7 @@ import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import org.jspare.core.Environment
 import org.jspare.kui.Toolkit
-import org.jspare.kui.fluently
+import org.jspare.kui.utils.fluently
 import org.jspare.kui.ui.widget.Attribute
 
 abstract class AbstractWidget : Widget {

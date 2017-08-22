@@ -1,6 +1,6 @@
 package org.jspare.kui.ui.widget
 
-import org.jspare.kui.fluently
+import org.jspare.kui.utils.fluently
 import org.jspare.kui.ui.Field
 import org.jspare.kui.ui.hook
 

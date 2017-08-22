@@ -1,6 +1,6 @@
 package org.jspare.kui.ui
 
-import org.jspare.kui.fluently
+import org.jspare.kui.utils.fluently
 
 abstract class Field : AbstractWidget() {
 

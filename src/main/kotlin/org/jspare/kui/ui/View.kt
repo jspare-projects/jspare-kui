@@ -4,10 +4,10 @@ import io.vertx.ext.web.RoutingContext
 import org.jspare.core.Environment
 import org.jspare.kui.I18n
 import org.jspare.kui.Renderable
-import org.jspare.kui.fluently
+import org.jspare.kui.utils.fluently
 
 @Template("org.jspare.kui.ui.widget.View")
-abstract class View(val routingContext: RoutingContext) : AbstractWidget() {
+abstract class View(val rCtx: RoutingContext) : AbstractWidget() {
 
     private val elements = mutableListOf<Renderable>()
 
@@ -15,7 +15,7 @@ abstract class View(val routingContext: RoutingContext) : AbstractWidget() {
 
     fun addElements(vararg renderables: Renderable): View = fluently { elements.addAll(renderables) }
 
-    fun getParam(paramName: String) = routingContext?.request()?.getParam(paramName)
+    fun getParam(paramName: String) = rCtx.request()?.getParam(paramName)
 
     fun i18n(key: String): String = i18n(key, key)
 
@@ -25,7 +25,7 @@ abstract class View(val routingContext: RoutingContext) : AbstractWidget() {
     private fun elements(): String {
 
         val builder = StringBuilder()
-        elements.forEach { builder.append(it.render(this!!.routingContext!!)) }
+        elements.forEach { builder.append(it.render(rCtx)) }
         return builder.toString()
     }
 }
