@@ -1,25 +1,31 @@
 package org.jspare.kui.ui
 
 import io.vertx.ext.web.RoutingContext
+import org.jspare.core.Environment
 import org.jspare.kui.I18n
 import org.jspare.kui.Renderable
 import org.jspare.kui.fluently
-import java.util.*
-import javax.inject.Inject
 
-abstract class View : AbstractWidget() {
+@Template("org.jspare.kui.ui.widget.View")
+abstract class View(val routingContext: RoutingContext) : AbstractWidget() {
 
-    @Inject val i18n: I18n? = null
-    var routingContext: RoutingContext? = null
-    val elements = ArrayList<Renderable>()
+    private val elements = mutableListOf<Renderable>()
 
-    fun addElement(renderable: Renderable): View = fluently { this.elements.plus(renderable) }
+    fun addElement(renderable: Renderable): View = fluently { elements.add(renderable) }
 
-    fun addElements(vararg renderables: Renderable): View = fluently { this.elements.plus(renderables) }
+    fun addElements(vararg renderables: Renderable): View = fluently { elements.addAll(renderables) }
 
     fun getParam(paramName: String) = routingContext?.request()?.getParam(paramName)
 
     fun i18n(key: String): String = i18n(key, key)
 
-    fun i18n(key: String, defaultValue: String = ""): String = i18n?.get(key) ?: defaultValue
+    fun i18n(key: String, defaultValue: String = ""): String = Environment.my(I18n::class.java)?.get(key) ?: defaultValue
+
+    @hook
+    private fun elements(): String {
+
+        val builder = StringBuilder()
+        elements.forEach { builder.append(it.render(this!!.routingContext!!)) }
+        return builder.toString()
+    }
 }

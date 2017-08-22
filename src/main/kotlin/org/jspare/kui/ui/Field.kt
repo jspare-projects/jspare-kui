@@ -4,9 +4,9 @@ import org.jspare.kui.fluently
 
 abstract class Field : AbstractWidget() {
 
-    var label: String? = null
+    @hook var label: String? = null
 
-    var name: String? = null
+    @hook var name: String? = null
 
     fun withLabel(label: String): Field = fluently { this.label = label }
 }

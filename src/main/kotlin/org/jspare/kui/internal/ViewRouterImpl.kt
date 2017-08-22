@@ -4,6 +4,7 @@ import org.jspare.kui.ViewRouter
 import kotlin.reflect.KClass
 
 class ViewRouterImpl : ViewRouter {
+
     private var routes: Map<String, Class<*>>? = null
 
     private var builded = false
@@ -16,8 +17,6 @@ class ViewRouterImpl : ViewRouter {
     }
 
     override fun build() {
-
         if (builded) return else builded = true
-
     }
 }
