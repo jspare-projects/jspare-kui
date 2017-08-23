@@ -35,14 +35,14 @@ class HtmlToolkitImplTest {
     fun ct_02(ctx: TestContext) {
 
         val rCtx = Mocker.createProxy(RoutingContext::class.java)
-        ctx.assertEquals(readCt("/ct_02.html"), SampleView(rCtx).render(rCtx))
+        ctx.assertEquals(readCt("/ct_02.html"), SampleView().render(rCtx))
     }
 
     @Test
     fun ct_03(ctx: TestContext) {
 
         val rCtx = Mocker.createProxy(RoutingContext::class.java)
-        val template = RenderableReflector.template(SampleView(rCtx))
+        val template = RenderableReflector.template(SampleView())
         ctx.assertEquals("org\\jspare\\kui\\ui\\widget\\View", template)
     }
 
@@ -50,19 +50,22 @@ class HtmlToolkitImplTest {
     fun ct_04(ctx: TestContext) {
 
         val rCtx = Mocker.createProxy(RoutingContext::class.java)
-        val template = RenderableReflector.template(CustomSampleView(rCtx))
+        val template = RenderableReflector.template(CustomSampleView())
         ctx.assertEquals("CustomSampleView", template)
     }
 
 
     private fun readCt(name: String) = HtmlToolkitImplTest::class.java.getResource(name).readText()
 
-    class SampleView(routingContext: RoutingContext) : View(routingContext) {
-        init {
+    class SampleView : View() {
+        override fun prepare() {
             addElement(Input())
         }
     }
 
     @Template("CustomSampleView")
-    class CustomSampleView(routingContext: RoutingContext) : View(routingContext)
+    class CustomSampleView : View() {
+        override fun prepare() {
+        }
+    }
 }

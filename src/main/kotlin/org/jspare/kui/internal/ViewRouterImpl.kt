@@ -1,28 +1,49 @@
 package org.jspare.kui.internal
 
-import org.jspare.kui.Renderable
+import io.vertx.ext.web.Router
 import org.jspare.kui.ViewRouter
+import org.jspare.kui.ui.View
+import org.jspare.kui.ui.path
+import org.jspare.kui.utils.fluently
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
-class ViewRouterImpl : ViewRouter {
+class ViewRouterImpl(override val router: Router) : ViewRouter {
 
-    private var routes: Map<String, Class<*>>? = null
+    private val log = LoggerFactory.getLogger(ViewRouterImpl::class.java)
+
+    private val routes: HashMap<String, View> = HashMap()
 
     private var builded = false
 
-    init {
-        routes = emptyMap()
+    override fun route(resource: KClass<*>?): ViewRouter {
+        route(pathFromKClass(resource), resource)
+        return this
     }
 
-    override fun route(path: String?, resource: KClass<*>?): ViewRouter {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun route(resource: View): ViewRouter {
+        route(pathFromKClass(resource::class), resource)
+        return this
+    }
+
+    override fun route(path: String?, resource: KClass<*>?): ViewRouter = fluently { route(path, resource?.primaryConstructor?.call() as View) }
+
+    override fun route(path: String?, resource: View): ViewRouter = fluently {
+        log.debug("Mapping View [$path] with Resource [${resource::class.qualifiedName}]")
+        routes.put(path!!, resource)
     }
 
     override fun build() {
         if (builded) return else builded = true
+
+        routes.forEach {
+            router.get(it.key).handler(it.value)
+        }
     }
 
-    override fun route(path: String?, resource: Renderable): ViewRouter {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun pathFromKClass(resource: KClass<*>?): String {
+        val annPath = resource?.annotations?.find { it is path } as path
+        return if (annPath != null) annPath.value else "/${resource?.qualifiedName!!}"
     }
 }
