@@ -1,6 +1,8 @@
 package org.jspare.kui.internal
 
-import io.vertx.ext.web.Router
+import io.netty.handler.codec.http.HttpHeaderNames
+import io.vertx.core.Vertx
+import io.vertx.ext.web.impl.RouterImpl
 import org.jspare.kui.ViewRouter
 import org.jspare.kui.ui.View
 import org.jspare.kui.ui.path
@@ -9,37 +11,35 @@ import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-class ViewRouterImpl(override val router: Router) : ViewRouter {
+class ViewRouterImpl(val vertx: Vertx?) : ViewRouter, RouterImpl(vertx) {
 
     private val log = LoggerFactory.getLogger(ViewRouterImpl::class.java)
 
-    private val routes: HashMap<String, View> = HashMap()
-
-    private var builded = false
-
-    override fun route(resource: KClass<*>?): ViewRouter {
+    override fun route(resource: KClass<*>?): ViewRouter = fluently {
         route(pathFromKClass(resource), resource)
-        return this
     }
 
-    override fun route(resource: View): ViewRouter {
+    override fun route(resource: View): ViewRouter = fluently {
         route(pathFromKClass(resource::class), resource)
-        return this
     }
 
-    override fun route(path: String?, resource: KClass<*>?): ViewRouter = fluently { route(path, resource?.primaryConstructor?.call() as View) }
+    override fun route(path: String?, resource: KClass<*>?): ViewRouter = fluently {
+        route(path, resource?.primaryConstructor?.call() as View)
+    }
 
     override fun route(path: String?, resource: View): ViewRouter = fluently {
         log.debug("Mapping View [$path] with Resource [${resource::class.qualifiedName}]")
-        routes.put(path!!, resource)
+        get(path).handler(resource)
     }
 
-    override fun build() {
-        if (builded) return else builded = true
-
-        routes.forEach {
-            router.get(it.key).handler(it.value)
-        }
+    override fun notFoundRoute(resource: KClass<*>?): ViewRouter = fluently {
+        route().last().handler({
+            val content = (resource?.primaryConstructor?.call() as View).render(it)
+            it.response()
+                    .setStatusCode(404)
+                    .putHeader(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=utf-8")
+                    .end(content)
+        })
     }
 
     private fun pathFromKClass(resource: KClass<*>?): String {

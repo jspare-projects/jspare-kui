@@ -4,9 +4,9 @@ import io.vertx.ext.web.Router
 import org.jspare.kui.ui.View
 import kotlin.reflect.KClass
 
-interface ViewRouter {
+interface ViewRouter : Router {
 
-    val router: Router
+    fun notFoundRoute(resource: KClass<*>?): ViewRouter
 
     fun route(resource: KClass<*>?): ViewRouter
 
@@ -15,6 +15,4 @@ interface ViewRouter {
     fun route(path: String?, resource: KClass<*>?): ViewRouter
 
     fun route(path: String?, resource: View): ViewRouter
-
-    fun build()
 }

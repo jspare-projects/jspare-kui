@@ -1,5 +1,6 @@
 package org.jspare.kui.ui
 
+import io.netty.handler.codec.http.HttpHeaderNames
 import io.vertx.core.Handler
 import io.vertx.ext.web.RoutingContext
 import org.apache.commons.lang.StringUtils
@@ -39,7 +40,10 @@ abstract class View() : AbstractWidget(), Handler<RoutingContext> {
         if (!rCtx.response().ended()) {
 
             val content = render(rCtx)
-            rCtx.response().end(content, StandardCharsets.UTF_8.toString())
+            rCtx
+                    .response()
+                    .putHeader(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=utf-8")
+                    .end(content)
         }
     }
 

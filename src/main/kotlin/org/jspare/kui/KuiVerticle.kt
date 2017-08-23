@@ -4,6 +4,7 @@ import io.vertx.core.Handler
 import io.vertx.core.http.HttpServerOptions
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
+import io.vertx.ext.web.handler.StaticHandler
 import org.jspare.kui.internal.ViewRouterImpl
 import org.jspare.vertx.JspareVerticle
 import org.jspare.vertx.web.builder.HttpServerBuilder
@@ -16,15 +17,17 @@ abstract class KuiVerticle : JspareVerticle() {
 
     override fun start() {
 
-        val rBuilder = RouterBuilder.create(vertx)
+        val rBuilder = RouterBuilder
+                .create(vertx)
+                .router(ViewRouterImpl(vertx!!))
+                // Allow access to all static
+                .route({ it.path("/static/*").handler(StaticHandler.create("static")) })
 
         handlers().forEach { rBuilder.addHandler(it) }
 
         val router = rBuilder.build()
 
-        val viewRouter = ViewRouterImpl(router)
-        bootstrap(viewRouter)
-        viewRouter.build()
+        bootstrap(router as ViewRouter)
 
         val httpServer = HttpServerBuilder
                 .create(vertx)
@@ -41,13 +44,13 @@ abstract class KuiVerticle : JspareVerticle() {
         })
     }
 
-    fun handlers(): Array<Handler<RoutingContext>> {
+    protected fun handlers(): Array<Handler<RoutingContext>> {
         return arrayOf(
                 BodyHandler.create()
         )
     }
 
-    fun httpServerOptions(): HttpServerOptions {
+    protected open fun httpServerOptions(): HttpServerOptions {
         return HttpServerOptions(config)
     }
 
