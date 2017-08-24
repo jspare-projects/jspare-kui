@@ -1,10 +1,9 @@
 package sample
 
-import org.jspare.kui.ui.View
+import io.vertx.core.http.HttpMethod
+import org.jspare.kui.Rest
 import org.jspare.kui.ui.path
-import org.jspare.kui.ui.widget.Input
-import org.jspare.kui.ui.widget.InputType
-import org.jspare.kui.ui.widget.Title
+import org.jspare.kui.ui.widget.*
 
 @path("/sample")
 class SampleView : View() {
@@ -15,8 +14,12 @@ class SampleView : View() {
 
         addElements(
             Title().withValue("SampleView"),
-            Input().withType(InputType.TEXT).withLabel("Usuário"),
-            Input().withType(InputType.PASSWORD).withLabel("Senha")
+            Form(rCtx!!)
+                .dataSource(Rest(HttpMethod.POST, "/auth"))
+                .addFields(
+                    Input().withType(InputType.TEXT).withLabel("Usuário"),
+                    Input().withType(InputType.PASSWORD).withLabel("Senha")
+                )
         )
     }
 }

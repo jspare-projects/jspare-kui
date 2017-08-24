@@ -1,4 +1,4 @@
-package org.jspare.kui.ui
+package org.jspare.kui.ui.widget
 
 import io.netty.handler.codec.http.HttpHeaderNames
 import io.vertx.core.Handler
@@ -7,13 +7,15 @@ import org.apache.commons.lang.StringUtils
 import org.jspare.core.Environment
 import org.jspare.kui.I18n
 import org.jspare.kui.Renderable
+import org.jspare.kui.ui.AbstractWidget
+import org.jspare.kui.ui.Template
+import org.jspare.kui.ui.hook
 import org.jspare.kui.utils.fluently
-import java.nio.charset.StandardCharsets
 
 @Template("org.jspare.kui.ui.widget.View")
 abstract class View() : AbstractWidget(), Handler<RoutingContext> {
 
-    private var rCtx: RoutingContext? = null
+    protected var rCtx: RoutingContext? = null
 
     private val elements = mutableListOf<Renderable>()
 

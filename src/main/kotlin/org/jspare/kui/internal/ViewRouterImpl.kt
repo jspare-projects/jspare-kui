@@ -4,7 +4,7 @@ import io.netty.handler.codec.http.HttpHeaderNames
 import io.vertx.core.Vertx
 import io.vertx.ext.web.impl.RouterImpl
 import org.jspare.kui.ViewRouter
-import org.jspare.kui.ui.View
+import org.jspare.kui.ui.widget.View
 import org.jspare.kui.ui.path
 import org.jspare.kui.utils.fluently
 import org.slf4j.LoggerFactory

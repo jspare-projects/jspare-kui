@@ -13,8 +13,8 @@ class SampleVerticle : KuiVerticle() {
     override fun bootstrap(viewRouter: ViewRouter) {
 
         viewRouter
-                .notFoundRoute(PageNotFoundView::class)
-                .route(SampleView::class)
+            .notFoundRoute(PageNotFoundView::class)
+            .route(SampleView::class)
     }
 
     override fun httpServerOptions(): HttpServerOptions

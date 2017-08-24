@@ -1,6 +1,6 @@
 package sample
 
-import org.jspare.kui.ui.View
+import org.jspare.kui.ui.widget.View
 import org.jspare.kui.ui.widget.Title
 
 class PageNotFoundView : View() {
