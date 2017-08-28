@@ -2,7 +2,7 @@ package org.jspare.kui.ui.widget
 
 import org.jspare.kui.ui.AbstractWidget
 import org.jspare.kui.ui.Widget
-import org.jspare.kui.ui.hook
+import org.jspare.kui.ui.annotations.hook
 import org.jspare.kui.utils.fluently
 
 open class Text : AbstractWidget() {

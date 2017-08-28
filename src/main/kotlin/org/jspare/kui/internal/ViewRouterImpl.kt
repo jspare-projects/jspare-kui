@@ -5,7 +5,7 @@ import io.vertx.core.Vertx
 import io.vertx.ext.web.impl.RouterImpl
 import org.jspare.kui.ViewRouter
 import org.jspare.kui.ui.widget.View
-import org.jspare.kui.ui.path
+import org.jspare.kui.ui.annotations.path
 import org.jspare.kui.utils.fluently
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass

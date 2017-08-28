@@ -4,7 +4,7 @@ import io.vertx.ext.unit.TestContext
 import io.vertx.ext.web.RoutingContext
 import org.jspare.core.internal.Bind
 import org.jspare.kui.Toolkit
-import org.jspare.kui.ui.Template
+import org.jspare.kui.ui.annotations.template
 import org.jspare.kui.ui.widget.View
 import org.jspare.kui.ui.widget.Input
 import org.jspare.unit.mock.Mocker
@@ -63,7 +63,7 @@ class HtmlToolkitImplTest {
         }
     }
 
-    @Template("CustomSampleView")
+    @template("CustomSampleView")
     class CustomSampleView : View() {
         override fun prepare() {
         }

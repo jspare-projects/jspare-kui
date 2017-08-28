@@ -3,9 +3,9 @@ package org.jspare.kui.internal
 import io.vertx.core.json.JsonObject
 import org.apache.commons.lang.StringUtils
 import org.jspare.kui.Renderable
-import org.jspare.kui.ui.Script
-import org.jspare.kui.ui.Template
-import org.jspare.kui.ui.hook
+import org.jspare.kui.ui.annotations.hook
+import org.jspare.kui.ui.annotations.scripts
+import org.jspare.kui.ui.annotations.template
 import java.io.File
 import java.lang.reflect.Field
 import java.lang.reflect.Method
@@ -14,7 +14,7 @@ import java.util.*
 object RenderableReflector {
 
     fun scripts(renderable: Renderable): Array<String>? {
-        val ann = renderable::class.annotations.find { it is Script } as? Script
+        val ann = renderable::class.annotations.find { it is scripts } as? scripts
         return ann?.value
     }
 
@@ -24,19 +24,19 @@ object RenderableReflector {
 
     private fun <T> template(renderable: Renderable, javaClass: Class<T>): String {
 
-        var template = StringUtils.EMPTY
+        var sTemplate = StringUtils.EMPTY
         if (javaClass.superclass != null) {
-            template = template(renderable, javaClass.superclass)
+            sTemplate = template(renderable, javaClass.superclass)
         }
 
-        if (javaClass.isAnnotationPresent(Template::class.java)) {
-            template = parseTemplate(javaClass.getAnnotation(Template::class.java).value)
+        if (javaClass.isAnnotationPresent(template::class.java)) {
+            sTemplate = parseTemplate(javaClass.getAnnotation(template::class.java).value)
         }
 
-        if (StringUtils.isEmpty(template)) {
-            template = parseTemplate(renderable::class.qualifiedName!!)
+        if (StringUtils.isEmpty(sTemplate)) {
+            sTemplate = parseTemplate(renderable::class.qualifiedName!!)
         }
-        return template;
+        return sTemplate;
     }
 
     fun <T> data(renderable: Renderable, javaClass: Class<T>): JsonObject {

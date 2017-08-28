@@ -8,11 +8,13 @@ import org.jspare.core.Environment
 import org.jspare.kui.I18n
 import org.jspare.kui.Renderable
 import org.jspare.kui.ui.AbstractWidget
-import org.jspare.kui.ui.Template
-import org.jspare.kui.ui.hook
+import org.jspare.kui.ui.annotations.hook
+import org.jspare.kui.ui.annotations.scripts
+import org.jspare.kui.ui.annotations.template
 import org.jspare.kui.utils.fluently
 
-@Template("org.jspare.kui.ui.widget.View")
+@scripts(arrayOf("https://code.jquery.com/jquery-3.2.1.min.js"))
+@template("org.jspare.kui.ui.widget.View")
 abstract class View() : AbstractWidget(), Handler<RoutingContext> {
 
     protected var rCtx: RoutingContext? = null
@@ -53,6 +55,13 @@ abstract class View() : AbstractWidget(), Handler<RoutingContext> {
     private fun elements(): String {
         val builder = StringBuilder()
         elements.forEach { builder.append(it.render(rCtx!!)) }
+        return builder.toString()
+    }
+
+    @hook
+    private fun scripts(): String{
+        var builder = StringBuilder()
+        rCtx?.get<Array<String>>("_scripts")?.forEach { builder.append("<script type=\"text/javascript\" src=\"$it\"></script>") }
         return builder.toString()
     }
 

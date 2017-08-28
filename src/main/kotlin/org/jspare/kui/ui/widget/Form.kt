@@ -3,8 +3,7 @@ package org.jspare.kui.ui.widget
 import io.vertx.ext.web.RoutingContext
 import org.jspare.kui.DataSource
 import org.jspare.kui.ui.AbstractWidget
-import org.jspare.kui.ui.Field
-import org.jspare.kui.ui.hook
+import org.jspare.kui.ui.annotations.hook
 import org.jspare.kui.utils.fluently
 import java.util.*
 

@@ -1,6 +1,7 @@
 package sample
 
 import io.vertx.core.http.HttpServerOptions
+import org.jspare.kui.DataSources
 import org.jspare.kui.KuiModule
 import org.jspare.kui.KuiVerticle
 import org.jspare.kui.ViewRouter
@@ -11,6 +12,8 @@ import org.jspare.vertx.annotation.Modules
 class SampleVerticle : KuiVerticle() {
 
     override fun bootstrap(viewRouter: ViewRouter) {
+
+        DataSources.put("api", "http://localhost:8000")
 
         viewRouter
             .notFoundRoute(PageNotFoundView::class)

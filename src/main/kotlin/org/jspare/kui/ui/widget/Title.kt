@@ -1,6 +1,6 @@
 package org.jspare.kui.ui.widget
 
-import org.jspare.kui.ui.hook
+import org.jspare.kui.ui.annotations.hook
 
 open class Title : Text() {
 

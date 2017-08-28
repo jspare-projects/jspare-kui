@@ -1,5 +1,6 @@
-package org.jspare.kui.ui
+package org.jspare.kui.ui.annotations
+
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
-annotation class Template(val value: String)
+annotation class scripts(val value: Array<String>)

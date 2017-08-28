@@ -36,10 +36,10 @@ class HtmlToolkitImpl : Toolkit {
 
     private fun addScriptOnRoutingContext (rCtx: RoutingContext, component: Renderable) {
 
-        val scripts = rCtx.get<Array<String>>("_scripts") ?: emptyArray()
+        val scripts = rCtx.get<ArrayList<String>>("_scripts") ?: ArrayList<String>()
         val pScripts = RenderableReflector.scripts(component) ?: emptyArray()
 
-        scripts.plus(pScripts)
+        pScripts.forEach { scripts.add(it) }
 
         rCtx.put("_scripts", scripts)
     }
