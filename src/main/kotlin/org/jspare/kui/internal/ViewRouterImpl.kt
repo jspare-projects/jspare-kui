@@ -19,17 +19,11 @@ class ViewRouterImpl(val vertx: Vertx?) : ViewRouter, RouterImpl(vertx) {
         route(pathFromKClass(resource), resource)
     }
 
-    override fun route(resource: View): ViewRouter = fluently {
-        route(pathFromKClass(resource::class), resource)
-    }
-
     override fun route(path: String?, resource: KClass<*>?): ViewRouter = fluently {
-        route(path, resource?.primaryConstructor?.call() as View)
-    }
-
-    override fun route(path: String?, resource: View): ViewRouter = fluently {
-        log.debug("Mapping View [$path] with Resource [${resource::class.qualifiedName}]")
-        get(path).handler(resource)
+        log.debug("Mapping View [$path] with Resource [${resource?.qualifiedName}]")
+        get(path).handler({
+            (resource?.primaryConstructor?.call() as View).handle(it)
+        })
     }
 
     override fun notFoundRoute(resource: KClass<*>?): ViewRouter = fluently {

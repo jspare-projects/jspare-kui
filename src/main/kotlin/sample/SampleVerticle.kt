@@ -20,6 +20,5 @@ class SampleVerticle : KuiVerticle() {
             .route(SampleView::class)
     }
 
-    override fun httpServerOptions(): HttpServerOptions
-            = HttpServerOptions().setPort(8080)
+    override fun httpServerOptions(): HttpServerOptions = HttpServerOptions().setPort(8080)
 }

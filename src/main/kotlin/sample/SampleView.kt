@@ -14,7 +14,7 @@ class SampleView : View() {
 
         addElements(
             Title().withValue("SampleView"),
-            Form(rCtx!!)
+            Form(rCtx())
                 .dataSource(rest("api", HttpMethod.POST, "/auth"))
                 .addFields(
                         Input().withType(InputType.TEXT).withLabel("Usuário"),

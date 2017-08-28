@@ -25,5 +25,5 @@ abstract class AbstractWidget : Widget {
     override fun addClass(oneClass: String): Widget = fluently { classes.plus(oneClass) }
 
     override fun render(context: RoutingContext): String =
-            Environment.my(Toolkit::class.java).render(context, this);
+            Environment.my(Toolkit::class.java).render(context, this)
 }

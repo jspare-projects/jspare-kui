@@ -10,9 +10,5 @@ interface ViewRouter : Router {
 
     fun route(resource: KClass<*>?): ViewRouter
 
-    fun route(resource: View): ViewRouter
-
     fun route(path: String?, resource: KClass<*>?): ViewRouter
-
-    fun route(path: String?, resource: View): ViewRouter
 }

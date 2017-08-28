@@ -35,6 +35,8 @@ abstract class View() : AbstractWidget(), Handler<RoutingContext> {
 
     fun withTitle(title: String) = fluently { this.title = title }
 
+    fun rCtx() : RoutingContext = rCtx!!
+
     override fun handle(rCtx: RoutingContext) {
 
         this.rCtx = rCtx
@@ -61,7 +63,7 @@ abstract class View() : AbstractWidget(), Handler<RoutingContext> {
     @hook
     private fun scripts(): String{
         var builder = StringBuilder()
-        rCtx?.get<Array<String>>("_scripts")?.forEach { builder.append("<script type=\"text/javascript\" src=\"$it\"></script>") }
+        rCtx?.get<List<String>>("_scripts")?.forEach { builder.append("<script type=\"text/javascript\" src=\"$it\"></script>") }
         return builder.toString()
     }
 
