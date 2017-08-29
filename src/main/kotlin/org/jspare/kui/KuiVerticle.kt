@@ -1,6 +1,7 @@
 package org.jspare.kui
 
 import io.vertx.core.Handler
+import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
@@ -40,8 +41,24 @@ abstract class KuiVerticle : JspareVerticle() {
                 log.error("Failed no start KUI Applicaiton", it.cause())
                 return@listen
             }
+
+            shareInContext(it.result())
+
             log.info("KUI Application started on port ${it.result().actualPort()}")
         })
+    }
+
+    private fun shareInContext(httpServer: HttpServer) {
+
+        val sharedData = vertx.sharedData().getLocalMap<String, String>(SHARED_CONTEXT)
+        sharedData.put("_basePath", formatBasePath(httpServer))
+    }
+
+    private fun formatBasePath(httpServer: HttpServer): String {
+        val httpServerOptions = httpServerOptions()
+        var endpoint = if (httpServerOptions.isSsl) "https://" else "http://"
+        endpoint += httpServerOptions.host + ":" + httpServer.actualPort()
+        return endpoint
     }
 
     protected fun handlers(): Array<Handler<RoutingContext>> {

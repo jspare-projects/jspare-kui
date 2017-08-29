@@ -13,7 +13,10 @@ import org.jspare.kui.ui.annotations.scripts
 import org.jspare.kui.ui.annotations.template
 import org.jspare.kui.utils.fluently
 
-@scripts(arrayOf("https://code.jquery.com/jquery-3.2.1.min.js"))
+@scripts(arrayOf(
+    "https://code.jquery.com/jquery-3.2.1.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"
+))
 @template("org.jspare.kui.ui.widget.View")
 abstract class View() : AbstractWidget(), Handler<RoutingContext> {
 

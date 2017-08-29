@@ -29,8 +29,6 @@ object RenderableReflector {
         val ann = javaClass.annotations.find { it is scripts } as? scripts
         if (ann != null) scripts.addAll(ann?.value)
         return scripts
-
-
     }
 
     fun template(renderable: Renderable): String? {
