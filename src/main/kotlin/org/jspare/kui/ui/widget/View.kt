@@ -53,14 +53,14 @@ abstract class View() : AbstractWidget(), Handler<RoutingContext> {
         }
     }
 
-    @hook
+    @hook("_elements")
     private fun elements(): String {
         val builder = StringBuilder()
         elements.forEach { builder.append(it.render(rCtx!!)) }
         return builder.toString()
     }
 
-    @hook
+    @hook("_scripts")
     private fun scripts(): String{
         var builder = StringBuilder()
         rCtx?.get<List<String>>("_scripts")?.forEach { builder.append("<script type=\"text/javascript\" src=\"$it\"></script>") }

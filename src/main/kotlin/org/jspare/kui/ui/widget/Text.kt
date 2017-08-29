@@ -7,7 +7,7 @@ import org.jspare.kui.utils.fluently
 
 open class Text : AbstractWidget() {
 
-    @hook
+    @hook("_value")
     var value: String? = ""
 
     fun withValue(value: String): Widget = fluently { this.value = value }

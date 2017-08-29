@@ -10,12 +10,27 @@ import java.io.File
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.*
+import kotlin.collections.ArrayList
 
 object RenderableReflector {
 
-    fun scripts(renderable: Renderable): Array<String>? {
-        val ann = renderable::class.annotations.find { it is scripts } as? scripts
-        return ann?.value
+    fun scripts(renderable: Renderable): List<String>? {
+        return scripts(renderable, renderable::class.java)
+    }
+
+    private fun <T> scripts(renderable: Renderable, javaClass: Class<T>): List<String> {
+
+        val scripts = ArrayList<String>()
+
+        if (javaClass.superclass != null) {
+            scripts.addAll(scripts(renderable, javaClass.superclass))
+        }
+
+        val ann = javaClass.annotations.find { it is scripts } as? scripts
+        if (ann != null) scripts.addAll(ann?.value)
+        return scripts
+
+
     }
 
     fun template(renderable: Renderable): String? {
@@ -55,7 +70,7 @@ object RenderableReflector {
                 .forEach { f ->
                     try {
                         f.isAccessible = true
-                        data.put("_${f.name}", f.get(renderable)?.toString() ?: StringUtils.EMPTY)
+                        data.put(f.getAnnotation(hook::class.java).value, f.get(renderable)?.toString() ?: StringUtils.EMPTY)
                     } catch (e: IllegalAccessException) {
                         /** ignore  */
                         error("failed to read member ${f.name} with error ${e.message}")
@@ -67,7 +82,7 @@ object RenderableReflector {
                 .forEach { m ->
                     try {
                         m.isAccessible = true
-                        data.put("_${m.name}", m.invoke(renderable)?.toString() ?: StringUtils.EMPTY)
+                        data.put(m.getAnnotation(hook::class.java).value, m.invoke(renderable)?.toString() ?: StringUtils.EMPTY)
                     } catch (e: IllegalAccessException) {
                         /** ignore  */
                         error("failed to read member ${m.name} with error ${e.message}")

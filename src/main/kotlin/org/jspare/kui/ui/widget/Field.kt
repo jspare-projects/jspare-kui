@@ -6,10 +6,10 @@ import org.jspare.kui.utils.fluently
 
 abstract class Field : AbstractWidget() {
 
-    @hook
+    @hook("_label")
     var label: String? = null
 
-    @hook
+    @hook("_name")
     var name: String? = null
 
     fun withLabel(label: String): Field = fluently { this.label = label }

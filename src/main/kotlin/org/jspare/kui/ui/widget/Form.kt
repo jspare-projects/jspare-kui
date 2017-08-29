@@ -27,7 +27,7 @@ class Form(val rCtx: RoutingContext) : AbstractWidget() {
 
     fun dataSource(dataSource: DataSource): Form = fluently { this.dataSource = dataSource }
 
-    @hook
+    @hook("_fields")
     private fun fields(): String {
         val builder = StringBuilder()
         fields.forEach { builder.append(it.render(rCtx!!)) }

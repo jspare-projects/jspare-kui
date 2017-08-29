@@ -7,4 +7,4 @@ package org.jspare.kui.ui.annotations
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD, AnnotationTarget.FUNCTION, AnnotationTarget.FILE)
-annotation class hook
+annotation class hook(val value : String)

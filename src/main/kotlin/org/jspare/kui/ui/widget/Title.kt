@@ -4,6 +4,6 @@ import org.jspare.kui.ui.annotations.hook
 
 open class Title : Text() {
 
-    @hook
+    @hook("_heading")
     var heading: Heading = Heading.H1
 }
